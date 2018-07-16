@@ -21,7 +21,6 @@
     var direFlag = 0 
     var score = 0
     var maxScore = 0
-
     function init(){
         snakeBody = []
         direct = 2
@@ -33,7 +32,6 @@
         putFood()
         document.getElementById('maxscore').innerText = localStorage.maxScore ? localStorage.maxScore : localStorage.maxScore = 0
     }
-
     function createSnakeNode(x, y)
     {
         snakeBody.push({x:x, y: y, color:length === 0 ? '#f00' : '#000'})
@@ -108,7 +106,6 @@
         if(e.keyCode === 37) setDirection(2)
         if(e.keyCode === 39) setDirection(-2)     
     }
-
     function setDirection (dir) {
         direFlag = 1
         if (Math.abs(dir) === Math.abs(direct)) 
@@ -128,8 +125,7 @@
            }
            if (flag) break
         }
-        food = {x: foodX, y: foodY,color: '#00f'}
-       
+        food = {x: foodX, y: foodY,color: '#00f'} 
     }
     init()
     time =  setInterval(function () {
