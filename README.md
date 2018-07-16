@@ -4,4 +4,4 @@ snake
 ![avatar](./assets/images/A.png)
 
 >Effect Picture
-![avatar](./assets/images/B.png)
+![avatar](./assets/images/b1.png)
