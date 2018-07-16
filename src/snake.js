@@ -17,23 +17,38 @@
     var snakeBody = []
     var direct = 2
     var food = {}
+    var timer = null
+    var direFlag = 0 
+    var score = 0
+    var maxScore = 0
 
     function init(){
         snakeBody = []
         direct = 2
+        score = 0
         length = 0
         for (let i = 0; i < 3; i++) 
             createSnakeNode(parseInt(cvsGridX / 2) + i, parseInt(cvsGridY / 2))
         drawSnake()
         putFood()
+        document.getElementById('maxscore').innerText = localStorage.maxScore ? localStorage.maxScore : localStorage.maxScore = 0
     }
 
     function createSnakeNode(x, y)
     {
         snakeBody.push({x:x, y: y, color:length === 0 ? '#f00' : '#000'})
         length ++ 
+        score ++
+        setMaxScore()
+        document.getElementById('score').innerText = score - 3
+        document.getElementById('maxscore').innerText = localStorage.maxScore
     }
-
+    function setMaxScore (){
+        if (parseInt(localStorage.maxScore) < score - 3) {
+            localStorage.maxScore = score
+            document.getElementById('maxscore').innerText = score
+        }
+    }
     function drawRect (snakeNode) {
         ctx.beginPath();
         ctx.fillStyle = snakeNode.color
@@ -65,12 +80,14 @@
             } 
         }        
         snakeBody[0] = newSankeHeadNode
+        direFlag = 0
         snakeBody[0].color = '#f00'
         isGetFood(snakeBody[0])
         chkOutOfBorder(snakeBody[0])
         drawSnake()
     }
     function gameover () {
+        clearInterval(timer)
         alert("Game Over!!")
         init()
     }
@@ -80,10 +97,11 @@
     function isGetFood (node) {        
         if (food.x === node.x && node.y === food.y) {
             putFood()
-            snakeBody.push({x: snakeBody[snakeBody.length - 1], y: snakeBody[snakeBody.length - 1].y, color:'#000'})
+            createSnakeNode(snakeBody[snakeBody.length - 1], snakeBody[snakeBody.length - 1].y)
         }
     }
     document.onkeydown = function (e){
+        if (direFlag) return  
         e.preventDefault()
         if(e.keyCode === 38) setDirection(1)
         if(e.keyCode === 40) setDirection(-1)
@@ -92,6 +110,7 @@
     }
 
     function setDirection (dir) {
+        direFlag = 1
         if (Math.abs(dir) === Math.abs(direct)) 
             return
         direct = dir
@@ -113,7 +132,8 @@
        
     }
     init()
-    setInterval(function () {
+    time =  setInterval(function () {
+        console.log(11);
         snakeMove()
         drawSnake()
     },200)
