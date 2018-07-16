@@ -129,7 +129,6 @@
     }
     init()
     time =  setInterval(function () {
-        console.log(11);
         snakeMove()
         drawSnake()
     },200)
